@@ -139,6 +139,16 @@ namespace NLog.Targets
         public bool WriteBuffer { get; set; }
 
         /// <summary>
+        /// Cached copy of Console.Out
+        /// </summary>
+        private readonly TextWriter _consoleOut;
+
+        /// <summary>
+        /// Cached copy of Console.Error
+        /// </summary>
+        private readonly TextWriter _consoleError;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ConsoleTarget" /> class.
         /// </summary>
         /// <remarks>
@@ -146,6 +156,8 @@ namespace NLog.Targets
         /// </remarks>
         public ConsoleTarget() : base()
         {
+            _consoleOut = Console.Out;
+            _consoleError = Console.Error;
         }
 
         /// <summary>
@@ -362,7 +374,7 @@ namespace NLog.Targets
 
         private TextWriter GetOutput()
         {
-            return StdErr ? Console.Error : Console.Out;
+            return StdErr ? _consoleError : _consoleOut;
         }
     }
 }

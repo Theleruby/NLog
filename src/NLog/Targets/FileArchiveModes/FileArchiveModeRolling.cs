@@ -46,6 +46,17 @@ namespace NLog.Targets.FileArchiveModes
     /// </summary>
     internal sealed class FileArchiveModeRolling : IFileArchiveMode
     {
+        internal FileArchiveModeRolling() : this(0)
+        {
+        }
+
+        internal FileArchiveModeRolling(int firstNumber)
+        {
+            _firstNumber = firstNumber;
+        }
+
+        private readonly int _firstNumber;
+        
         public bool IsArchiveCleanupEnabled => true; // Always to roll
 
         public bool AttemptCleanupOnInitializeFile(string archiveFilePath, int maxArchiveFiles, int maxArchiveDays)
@@ -61,7 +72,7 @@ namespace NLog.Targets.FileArchiveModes
         public List<DateAndSequenceArchive> GetExistingArchiveFiles(string archiveFilePath)
         {
             List<DateAndSequenceArchive> existingArchiveFiles = new List<DateAndSequenceArchive>();
-            for (int archiveNumber = 0; archiveNumber < int.MaxValue; archiveNumber++)
+            for (int archiveNumber = _firstNumber; archiveNumber < int.MaxValue; archiveNumber++)
             {
                 string existingFileName = ReplaceNumberPattern(archiveFilePath, archiveNumber);
                 FileInfo existingFileInfo = new FileInfo(existingFileName);
@@ -99,7 +110,7 @@ namespace NLog.Targets.FileArchiveModes
                 string rollFileName = ReplaceNumberPattern(archiveFilePath, rollSequenceNo);
                 existingArchiveFiles.Add(new DateAndSequenceArchive(rollFileName, DateTime.MinValue, string.Empty, int.MaxValue));
             }
-            string newFileName = ReplaceNumberPattern(archiveFilePath, 0);
+            string newFileName = ReplaceNumberPattern(archiveFilePath, _firstNumber);
             newFileName = Path.GetFullPath(newFileName);    // Rebuild to fix non-standard path-format
             return new DateAndSequenceArchive(newFileName, DateTime.MinValue, string.Empty, int.MinValue);
         }

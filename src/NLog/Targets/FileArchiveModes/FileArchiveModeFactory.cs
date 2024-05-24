@@ -69,6 +69,7 @@ namespace NLog.Targets.FileArchiveModes
             switch (archiveNumbering)
             {
                 case ArchiveNumberingMode.Rolling: return new FileArchiveModeRolling();
+                case ArchiveNumberingMode.Rolling1: return new FileArchiveModeRolling(1);
                 case ArchiveNumberingMode.Sequence: return new FileArchiveModeSequence(dateFormat, archiveCleanupEnabled);
                 case ArchiveNumberingMode.Date: return new FileArchiveModeDate(dateFormat, archiveCleanupEnabled);
                 case ArchiveNumberingMode.DateAndSequence: return new FileArchiveModeDateAndSequence(dateFormat, archiveCleanupEnabled);

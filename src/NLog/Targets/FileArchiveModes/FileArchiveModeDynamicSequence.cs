@@ -151,6 +151,7 @@ namespace NLog.Targets.FileArchiveModes
             {
                 case ArchiveNumberingMode.Sequence:
                 case ArchiveNumberingMode.Rolling:
+                case ArchiveNumberingMode.Rolling1:
                 case ArchiveNumberingMode.DateAndSequence:
                     {
                         // Force sequence-number into template (Just before extension)

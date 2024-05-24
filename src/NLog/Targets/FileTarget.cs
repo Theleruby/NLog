@@ -1284,7 +1284,7 @@ namespace NLog.Targets
                 {
                     if (FileCompressor is IArchiveFileCompressor archiveFileCompressor)
                     {
-                        string entryName = (ArchiveNumbering != ArchiveNumberingMode.Rolling) ? (Path.GetFileNameWithoutExtension(archiveFileName) + Path.GetExtension(fileName)) : Path.GetFileName(fileName);
+                        string entryName = (ArchiveNumbering != ArchiveNumberingMode.Rolling && ArchiveNumbering != ArchiveNumberingMode.Rolling1) ? (Path.GetFileNameWithoutExtension(archiveFileName) + Path.GetExtension(fileName)) : Path.GetFileName(fileName);
                         archiveFileCompressor.CompressFile(fileName, archiveFileName, entryName);
                     }
                     else
